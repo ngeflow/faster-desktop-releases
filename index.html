@@ -6,13 +6,43 @@
 <title>Ngeshare Desktop — Download</title>
 <meta name="description" content="Download Ngeshare Desktop for macOS (Apple Silicon) or Windows.">
 <style>
-  :root { color-scheme: light dark; }
+  :root {
+    color-scheme: light dark;
+    --bg-start: #f7f9fc;
+    --bg-end: #eef2f7;
+    --text: #1a2230;
+    --text-muted: #4a5569;
+    --card-bg: #ffffff;
+    --card-border: #e3e8ef;
+    --card-shadow: 0 10px 30px rgba(20, 30, 50, .06);
+    --code-bg: #eef2f7;
+    --details-bg: rgba(0,0,0,.04);
+    --btn-bg: #2563eb;
+    --btn-bg-hover: #1d4ed8;
+    --btn-text: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-start: #0e1420;
+      --bg-end: #141b2b;
+      --text: #e6ebf3;
+      --text-muted: #a6b1c5;
+      --card-bg: #182032;
+      --card-border: #283247;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+      --code-bg: #222c42;
+      --details-bg: rgba(255,255,255,.04);
+      --btn-bg: #3b6ee8;
+      --btn-bg-hover: #5283ef;
+      --btn-text: #f7faff;
+    }
+  }
   * { box-sizing: border-box; }
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: linear-gradient(180deg, #f7f9fc 0%, #eef2f7 100%);
-    color: #1a2230;
+    background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    color: var(--text);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -20,31 +50,21 @@
     justify-content: center;
     padding: 48px 20px;
   }
-  @media (prefers-color-scheme: dark) {
-    body { background: linear-gradient(180deg, #0e1420 0%, #141b2b 100%); color: #e6ebf3; }
-    .card { background: #1a2233; border-color: #2a3448; }
-    .secondary { color: #8a96ad; }
-    .btn { background: #2563eb; }
-    .btn:hover { background: #1d4ed8; }
-    .btn.ghost { background: transparent; border-color: #2a3448; color: #e6ebf3; }
-    .btn.ghost:hover { background: #232d43; }
-    code { background: #232d43; }
-  }
   main {
     max-width: 560px;
     width: 100%;
     text-align: center;
   }
   h1 { font-size: 2rem; margin: 0 0 .3em; letter-spacing: -.02em; }
-  .tagline { color: #5b6779; margin: 0 0 36px; font-size: 1.05rem; }
-  .secondary { color: #5b6779; font-size: .9rem; }
+  .tagline { color: var(--text-muted); margin: 0 0 36px; font-size: 1.05rem; }
   .card {
-    background: #fff;
-    border: 1px solid #e3e8ef;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 14px;
     padding: 28px 26px;
     text-align: left;
-    box-shadow: 0 10px 30px rgba(20, 30, 50, .06);
+    box-shadow: var(--card-shadow);
+    color: var(--text);
   }
   .primary-row {
     display: flex;
@@ -59,59 +79,64 @@
     gap: 8px;
     padding: 14px 18px;
     border-radius: 10px;
-    background: #2563eb;
-    color: #fff;
+    background: var(--btn-bg);
+    color: var(--btn-text);
     text-decoration: none;
     font-weight: 600;
     font-size: .98rem;
     border: 1px solid transparent;
     transition: background .15s ease;
   }
-  .btn:hover { background: #1d4ed8; }
-  .btn.ghost {
-    background: #fff;
-    color: #1a2230;
-    border-color: #d9e0ea;
-  }
-  .btn.ghost:hover { background: #f5f7fb; }
+  .btn:hover { background: var(--btn-bg-hover); }
   .btn svg { width: 18px; height: 18px; flex-shrink: 0; }
   .other {
     display: flex;
     gap: 12px;
     justify-content: center;
     margin-top: 6px;
+    flex-wrap: wrap;
   }
-  .other a { color: #5b6779; text-decoration: none; font-size: .88rem; }
-  .other a:hover { text-decoration: underline; }
+  .other a { color: var(--text-muted); text-decoration: none; font-size: .88rem; }
+  .other a:hover { text-decoration: underline; color: var(--text); }
+  .other .sep { color: var(--text-muted); opacity: .5; }
   details {
     margin-top: 20px;
-    font-size: .9rem;
+    font-size: .92rem;
+    color: var(--text);
   }
   details summary {
     cursor: pointer;
-    color: #5b6779;
+    color: var(--text-muted);
     padding: 6px 0;
+    font-weight: 500;
   }
+  details summary:hover { color: var(--text); }
+  details[open] summary { color: var(--text); }
   details pre {
-    background: rgba(0,0,0,.04);
+    background: var(--details-bg);
     padding: 10px 12px;
     border-radius: 8px;
     overflow-x: auto;
     font-size: .82rem;
     margin: 8px 0;
+    color: var(--text);
   }
+  details ul { padding-left: 20px; }
+  details li { margin: 4px 0; }
   code {
-    background: #eef2f7;
+    background: var(--code-bg);
     padding: 1px 6px;
     border-radius: 4px;
     font-size: .88em;
+    color: var(--text);
   }
   footer {
     margin-top: 36px;
-    font-size: .82rem;
-    color: #8a96ad;
+    font-size: .88rem;
+    color: var(--text-muted);
   }
   footer a { color: inherit; }
+  footer a:hover { color: var(--text); }
 </style>
 </head>
 <body>
@@ -128,7 +153,7 @@
     </div>
     <div class="other">
       <a id="mac-alt" href="https://github.com/ngeflow/faster-desktop-releases/releases/latest/download/Ngeshare-Desktop-0.1.0-aarch64.dmg">macOS (Apple Silicon .dmg)</a>
-      <span class="secondary">·</span>
+      <span class="sep">·</span>
       <a id="win-alt" href="https://github.com/ngeflow/faster-desktop-releases/releases/latest/download/Ngeshare-Desktop-0.1.0-x64-setup.exe">Windows (.exe)</a>
     </div>
 
