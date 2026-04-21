@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ngeshare Desktop — Download</title>
+<meta name="description" content="Download Ngeshare Desktop for macOS (Apple Silicon) or Windows.">
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(180deg, #f7f9fc 0%, #eef2f7 100%);
+    color: #1a2230;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px;
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: linear-gradient(180deg, #0e1420 0%, #141b2b 100%); color: #e6ebf3; }
+    .card { background: #1a2233; border-color: #2a3448; }
+    .secondary { color: #8a96ad; }
+    .btn { background: #2563eb; }
+    .btn:hover { background: #1d4ed8; }
+    .btn.ghost { background: transparent; border-color: #2a3448; color: #e6ebf3; }
+    .btn.ghost:hover { background: #232d43; }
+    code { background: #232d43; }
+  }
+  main {
+    max-width: 560px;
+    width: 100%;
+    text-align: center;
+  }
+  h1 { font-size: 2rem; margin: 0 0 .3em; letter-spacing: -.02em; }
+  .tagline { color: #5b6779; margin: 0 0 36px; font-size: 1.05rem; }
+  .secondary { color: #5b6779; font-size: .9rem; }
+  .card {
+    background: #fff;
+    border: 1px solid #e3e8ef;
+    border-radius: 14px;
+    padding: 28px 26px;
+    text-align: left;
+    box-shadow: 0 10px 30px rgba(20, 30, 50, .06);
+  }
+  .primary-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: .98rem;
+    border: 1px solid transparent;
+    transition: background .15s ease;
+  }
+  .btn:hover { background: #1d4ed8; }
+  .btn.ghost {
+    background: #fff;
+    color: #1a2230;
+    border-color: #d9e0ea;
+  }
+  .btn.ghost:hover { background: #f5f7fb; }
+  .btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .other {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 6px;
+  }
+  .other a { color: #5b6779; text-decoration: none; font-size: .88rem; }
+  .other a:hover { text-decoration: underline; }
+  details {
+    margin-top: 20px;
+    font-size: .9rem;
+  }
+  details summary {
+    cursor: pointer;
+    color: #5b6779;
+    padding: 6px 0;
+  }
+  details pre {
+    background: rgba(0,0,0,.04);
+    padding: 10px 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: .82rem;
+    margin: 8px 0;
+  }
+  code {
+    background: #eef2f7;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: .88em;
+  }
+  footer {
+    margin-top: 36px;
+    font-size: .82rem;
+    color: #8a96ad;
+  }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ngeshare Desktop</h1>
+  <p class="tagline">Native desktop app for the Ngeshare learning platform.</p>
+
+  <div class="card">
+    <div class="primary-row">
+      <a id="primary" class="btn" href="https://github.com/ngeflow/faster-desktop-releases/releases/latest">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span id="primary-label">Download</span>
+      </a>
+    </div>
+    <div class="other">
+      <a id="mac-alt" href="https://github.com/ngeflow/faster-desktop-releases/releases/latest/download/Ngeshare-Desktop-0.1.0-aarch64.dmg">macOS (Apple Silicon .dmg)</a>
+      <span class="secondary">·</span>
+      <a id="win-alt" href="https://github.com/ngeflow/faster-desktop-releases/releases/latest/download/Ngeshare-Desktop-0.1.0-x64-setup.exe">Windows (.exe)</a>
+    </div>
+
+    <details>
+      <summary>macOS: first-time open</summary>
+      <p>The app isn't notarized yet, so macOS Gatekeeper will refuse to open it. Two ways past it:</p>
+      <ul>
+        <li>Right-click the app in Applications → <b>Open</b> → confirm.</li>
+        <li>Or remove the quarantine flag in Terminal:</li>
+      </ul>
+      <pre><code>xattr -cr "/Applications/Ngeshare Desktop.app"</code></pre>
+    </details>
+
+    <details>
+      <summary>System requirements</summary>
+      <ul>
+        <li><b>macOS</b>: 11 Big Sur or later, Apple Silicon (M1/M2/M3/M4). Intel Macs not supported in v0.1.0.</li>
+        <li><b>Windows</b>: Windows 10 or later, 64-bit.</li>
+      </ul>
+    </details>
+  </div>
+
+  <footer>
+    <a href="https://github.com/ngeflow/faster-desktop-releases/releases">All releases</a>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var ua = navigator.userAgent;
+  var isMac = /Mac OS X|Macintosh/.test(ua);
+  var isWin = /Windows/.test(ua);
+  var btn = document.getElementById('primary');
+  var label = document.getElementById('primary-label');
+  var macUrl = document.getElementById('mac-alt').href;
+  var winUrl = document.getElementById('win-alt').href;
+  if (isMac) {
+    btn.href = macUrl;
+    label.textContent = 'Download for macOS';
+  } else if (isWin) {
+    btn.href = winUrl;
+    label.textContent = 'Download for Windows';
+  } else {
+    label.textContent = 'Choose your platform below';
+  }
+})();
+</script>
+</body>
+</html>
