@@ -19,6 +19,8 @@
     --btn-bg: #2563eb;
     --btn-bg-hover: #1d4ed8;
     --btn-text: #ffffff;
+    --aurora-main: rgba(167, 139, 250, 0.65);
+    --aurora-glow: rgba(188, 158, 255, 0.28);
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -33,6 +35,8 @@
       --btn-bg: #3b6ee8;
       --btn-bg-hover: #5283ef;
       --btn-text: #f7faff;
+      --aurora-main: rgba(139, 92, 246, 0.42);
+      --aurora-glow: rgba(167, 139, 250, 0.18);
     }
   }
   * { box-sizing: border-box; }
@@ -57,18 +61,16 @@
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(40% 35% at 20% 25%, rgba(167, 139, 250, 0.55), transparent 60%),
-      radial-gradient(35% 30% at 80% 20%, rgba(96, 165, 250, 0.50), transparent 60%),
-      radial-gradient(40% 35% at 75% 80%, rgba(244, 114, 182, 0.45), transparent 60%),
-      radial-gradient(35% 30% at 25% 80%, rgba(45, 212, 191, 0.40), transparent 60%);
-    filter: blur(50px) saturate(115%);
-    animation: drift 60s ease-in-out infinite alternate;
+      radial-gradient(70% 55% at 10% 85%, var(--aurora-main), transparent 75%),
+      radial-gradient(35% 30% at 90% 15%, var(--aurora-glow), transparent 70%);
+    filter: blur(40px) saturate(110%);
+    animation: drift 55s ease-in-out infinite alternate;
     will-change: transform;
   }
   @keyframes drift {
     0%   { transform: translate3d(0, 0, 0) scale(1); }
-    50%  { transform: translate3d(2%, -1.5%, 0) scale(1.06); }
-    100% { transform: translate3d(-2%, 1.5%, 0) scale(1.03); }
+    50%  { transform: translate3d(1.5%, -1%, 0) scale(1.04); }
+    100% { transform: translate3d(-1.5%, 0.5%, 0) scale(1.02); }
   }
   @media (prefers-reduced-motion: reduce) {
     body::before { animation: none; }
