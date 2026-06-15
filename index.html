@@ -8,30 +8,28 @@
 <style>
   :root {
     color-scheme: light dark;
-    --bg-start: #f7f9fc;
-    --bg-end: #eef2f7;
+    --bg-base: #f5f7fb;
     --text: #1a2230;
     --text-muted: #4a5569;
-    --card-bg: #ffffff;
-    --card-border: #e3e8ef;
-    --card-shadow: 0 10px 30px rgba(20, 30, 50, .06);
-    --code-bg: #eef2f7;
-    --details-bg: rgba(0,0,0,.04);
+    --card-bg: rgba(255, 255, 255, 0.50);
+    --card-border: rgba(255, 255, 255, 0.70);
+    --card-shadow: 0 10px 40px rgba(20, 30, 50, .08);
+    --code-bg: rgba(0, 0, 0, 0.05);
+    --details-bg: rgba(0, 0, 0, 0.03);
     --btn-bg: #2563eb;
     --btn-bg-hover: #1d4ed8;
     --btn-text: #ffffff;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg-start: #0e1420;
-      --bg-end: #141b2b;
+      --bg-base: #0a0f1a;
       --text: #e6ebf3;
       --text-muted: #a6b1c5;
-      --card-bg: #182032;
-      --card-border: #283247;
-      --card-shadow: 0 10px 30px rgba(0, 0, 0, .35);
-      --code-bg: #222c42;
-      --details-bg: rgba(255,255,255,.04);
+      --card-bg: rgba(20, 28, 46, 0.42);
+      --card-border: rgba(255, 255, 255, 0.10);
+      --card-shadow: 0 10px 40px rgba(0, 0, 0, .40);
+      --code-bg: rgba(255, 255, 255, 0.06);
+      --details-bg: rgba(255, 255, 255, 0.04);
       --btn-bg: #3b6ee8;
       --btn-bg-hover: #5283ef;
       --btn-text: #f7faff;
@@ -41,7 +39,6 @@
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
     color: var(--text);
     min-height: 100vh;
     display: flex;
@@ -49,8 +46,36 @@
     align-items: center;
     justify-content: center;
     padding: 48px 20px;
+    background: var(--bg-base);
+    position: relative;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(40% 35% at 20% 25%, rgba(167, 139, 250, 0.55), transparent 60%),
+      radial-gradient(35% 30% at 80% 20%, rgba(96, 165, 250, 0.50), transparent 60%),
+      radial-gradient(40% 35% at 75% 80%, rgba(244, 114, 182, 0.45), transparent 60%),
+      radial-gradient(35% 30% at 25% 80%, rgba(45, 212, 191, 0.40), transparent 60%);
+    filter: blur(50px) saturate(115%);
+    animation: drift 60s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes drift {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    50%  { transform: translate3d(2%, -1.5%, 0) scale(1.06); }
+    100% { transform: translate3d(-2%, 1.5%, 0) scale(1.03); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body::before { animation: none; }
   }
   main {
+    position: relative;
+    z-index: 1;
     max-width: 560px;
     width: 100%;
     text-align: center;
@@ -59,8 +84,10 @@
   .tagline { color: var(--text-muted); margin: 0 0 36px; font-size: 1.05rem; }
   .card {
     background: var(--card-bg);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    backdrop-filter: blur(20px) saturate(140%);
     border: 1px solid var(--card-border);
-    border-radius: 14px;
+    border-radius: 18px;
     padding: 28px 26px;
     text-align: left;
     box-shadow: var(--card-shadow);
