@@ -173,18 +173,33 @@
   <h1>Ngeshare Desktop</h1>
   <p class="tagline">Native desktop app for the Ngeshare learning platform.</p>
 
+  <div style="margin-bottom: 20px; font-size: .92rem; color: var(--text-muted);">
+    <strong style="color: var(--text);">v0.14.0</strong> — online/offline status fix, video heartbeat sync, keyboard fixes
+  </div>
+
   <div class="card">
     <div class="primary-row">
-      <a id="primary" class="btn" href="downloads/0.1.2/Ngeshare-Desktop-0.1.2-aarch64.dmg">
+      <a id="primary" class="btn" href="downloads/0.14.0/Ngeshare-Desktop-0.14.0-aarch64.dmg">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span id="primary-label">Download</span>
       </a>
     </div>
     <div class="other">
-      <a id="mac-alt" href="downloads/0.1.2/Ngeshare-Desktop-0.1.2-aarch64.dmg">macOS (Apple Silicon .dmg)</a>
+      <a id="mac-alt" href="downloads/0.14.0/Ngeshare-Desktop-0.14.0-aarch64.dmg">macOS (Apple Silicon .dmg)</a>
       <span class="sep">·</span>
-      <a id="win-alt" href="downloads/0.1.2/Ngeshare-Desktop-0.1.2-x64-setup.exe">Windows (.exe)</a>
+      <a id="win-alt" href="downloads/0.1.2/Ngeshare-Desktop-0.1.2-x64-setup.exe">Windows (.exe) — v0.1.2</a>
     </div>
+
+    <details>
+      <summary>What's new in v0.14.0</summary>
+      <ul>
+        <li>Fix online/offline status in hangout online (re-registers presence on foreground return)</li>
+        <li>Video heartbeat every 5 min for syncing play time position</li>
+        <li>Update video member position if drift > 30 seconds</li>
+        <li>Fix keyboard issues when inputting comments in feed and chat</li>
+        <li>iOS crash fixes (attendance date guard, videoEndDate fallback, render episode ternary fix)</li>
+      </ul>
+    </details>
 
     <details>
       <summary>macOS: first-time open</summary>
