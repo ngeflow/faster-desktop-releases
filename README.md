@@ -13,6 +13,10 @@ Evergreen direct links (always point at the latest release):
 - macOS (Apple Silicon): https://github.com/ngeflow/faster-desktop-releases/releases/latest/download/Ngeshare-Desktop-0.16.5-aarch64.dmg
 - Windows (x64): https://github.com/ngeflow/faster-desktop-releases/releases/latest/download/Ngeshare-Desktop-0.16.5-x64-setup.exe
 
+## Docs
+
+- [Hangout Online — Web-Based Version with a Local Server](https://ngeflow.github.io/faster-desktop-releases/hangout-online-web-based-explainer.html): why we test Hangout Online in the browser first, and how that gives confidence in the desktop app.
+
 ## Install
 
 ### macOS (Apple Silicon)

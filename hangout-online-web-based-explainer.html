@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hangout Online — Web-Based Version with a Local Server</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      line-height: 1.7;
+      padding: 40px 20px;
+    }
+    .container { max-width: 960px; margin: 0 auto; }
+    h1 {
+      font-size: 2.4rem;
+      background: linear-gradient(135deg, #22c55e, #10b981, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .subtitle { color: #94a3b8; font-size: 1.1rem; margin-bottom: 40px; }
+    h2 {
+      font-size: 1.55rem;
+      color: #22c55e;
+      margin: 48px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #1e293b;
+    }
+    h3 {
+      font-size: 1.15rem;
+      color: #34d399;
+      margin: 28px 0 12px;
+    }
+    h4 { color: #f1f5f9; margin: 16px 0 8px; }
+    p { margin-bottom: 16px; }
+    ul, ol { margin: 12px 0 20px 24px; }
+    li { margin-bottom: 8px; }
+    .card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 24px;
+      border-left: 4px solid #22c55e;
+    }
+    .card.purple { border-left-color: #a855f7; }
+    .card.blue { border-left-color: #3b82f6; }
+    .card.orange { border-left-color: #f97316; }
+    .card.cyan { border-left-color: #06b6d4; }
+    .card.red { border-left-color: #ef4444; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .grid-item {
+      background: #1e293b;
+      border-radius: 10px;
+      padding: 20px;
+      border-top: 3px solid #22c55e;
+    }
+    .grid-item .icon { font-size: 1.5rem; margin-bottom: 8px; }
+    .grid-item h4 { color: #f1f5f9; margin-bottom: 6px; }
+    .grid-item p { color: #94a3b8; font-size: 0.92rem; margin: 0; }
+    strong { color: #f1f5f9; }
+    code {
+      background: #0f172a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #22d3ee;
+    }
+    .diagram {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 28px;
+      margin: 24px 0;
+      text-align: center;
+    }
+    .diagram .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      align-items: stretch;
+    }
+    .node {
+      background: #0f172a;
+      border: 2px solid #22c55e;
+      border-radius: 10px;
+      padding: 16px 18px;
+      flex: 1 1 220px;
+      max-width: 300px;
+      text-align: left;
+    }
+    .node.tauri { border-color: #a855f7; }
+    .node.server { border-color: #06b6d4; }
+    .node h4 { margin: 0 0 6px; font-size: 1rem; }
+    .node p { color: #94a3b8; font-size: 0.85rem; margin: 0; }
+    .arrow {
+      color: #f59e0b;
+      font-size: 1.6rem;
+      align-self: center;
+      padding: 4px 0;
+      width: 100%;
+    }
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      margin: 16px 0 4px;
+    }
+    .step {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.92rem;
+      color: #e2e8f0;
+      flex: 1 1 180px;
+      text-align: left;
+    }
+    .step .num {
+      display: inline-block;
+      background: #22c55e;
+      color: #0f172a;
+      font-weight: 700;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      line-height: 22px;
+      text-align: center;
+      font-size: 0.8rem;
+      margin-right: 8px;
+    }
+    .note {
+      background: #172554;
+      border-left: 4px solid #3b82f6;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .note p:last-child { margin-bottom: 0; }
+    .pill {
+      display: inline-block;
+      background: #1e293b;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: #34d399;
+      margin: 0 6px 8px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #334155;
+      padding: 12px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #1e293b; color: #34d399; }
+    tr:nth-child(even) td { background: #16213b; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <h1>Hangout Online: Web-Based Version with a Local Server</h1>
+    <p class="subtitle">Why we test Hangout Online in the browser first, and how the result gives confidence in the desktop app.</p>
+
+    <!-- ============================================================ -->
+    <h2>1. Purpose of This Document</h2>
+    <div class="card">
+      <p>This document explains our plan for Hangout Online on desktop. It tells you:</p>
+      <ul>
+        <li>what we built first, and why it was straightforward;</li>
+        <li>what problem we met when we tested it;</li>
+        <li>the new approach: a web-based version with a local server;</li>
+        <li>why this approach gives us confidence in the desktop app.</li>
+      </ul>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>2. The Starting Point: faster-app and faster-desktop</h2>
+
+    <div class="card blue">
+      <h3>faster-app</h3>
+      <p><strong>faster-app</strong> is the mobile application for ngeShare. It runs on Android and on iOS. It contains the Hangout Online feature: a Member can follow the weekly Episode with video and the rules track.</p>
+    </div>
+
+    <div class="card purple">
+      <h3>faster-desktop</h3>
+      <p><strong>faster-desktop</strong> is the desktop version of faster-app. It is a copy of the faster-app code, with a desktop shell. The shell is <strong>Tauri 2</strong>. Tauri puts the app in a normal desktop window and adds a small Rust layer.</p>
+      <p>In other words: the user interface code is the same, but the container is different.</p>
+    </div>
+
+    <h3>What changed from phone to desktop</h3>
+    <p>The first work was to move Hangout Online from a phone to a desktop. This was the straightforward part. The product logic stays the same. The implementation details change, because the device is different.</p>
+
+    <div class="grid">
+      <div class="grid-item">
+        <div class="icon">🖱️</div>
+        <h4>Input</h4>
+        <p>A phone uses touch. A desktop uses a mouse and a keyboard. The code must react to clicks, hovers, and keys.</p>
+      </div>
+      <div class="grid-item">
+        <div class="icon">🖥️</div>
+        <h4>Screen and layout</h4>
+        <p>A phone screen is small and tall. A desktop window is wide and can change size. The layout must adapt.</p>
+      </div>
+      <div class="grid-item">
+        <div class="icon">🧭</div>
+        <h4>Navigation</h4>
+        <p>A phone uses swipe gestures and system back. A desktop uses visible buttons and a stable menu.</p>
+      </div>
+      <div class="grid-item">
+        <div class="icon">🎬</div>
+        <h4>Media</h4>
+        <p>Video download, cache, and playback must work in the desktop environment. This is the core of Hangout Online.</p>
+      </div>
+      <div class="grid-item">
+        <div class="icon">🔔</div>
+        <h4>Notifications and links</h4>
+        <p>Phone push notifications and phone deep links do not work the same way. The desktop needs other routes.</p>
+      </div>
+      <div class="grid-item">
+        <div class="icon">📦</div>
+        <h4>Build and release</h4>
+        <p>A phone builds with Expo and the app stores. A desktop builds with Tauri and produces installers for each system.</p>
+      </div>
+    </div>
+
+    <p>So the team adapts these implementation details inside <code>faster-desktop</code>. The learning content and the flow of Hangout Online do not change.</p>
+
+    <!-- ============================================================ -->
+    <h2>3. The Problem: Hard to Test with an AI Assistant</h2>
+
+    <div class="card red">
+      <p>A Tauri desktop app is <strong>hard to test with an AI assistant</strong> (a large language model, or LLM). The AI assistant is our main tool to check changes.</p>
+    </div>
+
+    <h3>Why it is hard</h3>
+    <ul>
+      <li>The assistant works best with text: source code, logs, and web pages. A Tauri window is a native desktop window, so the assistant cannot read it easily.</li>
+      <li>The assistant cannot click buttons in a native window in a simple and reliable way.</li>
+      <li>A build needs the Rust toolchain and platform libraries. Each build takes time.</li>
+      <li>A bug on desktop is often in the shell, not in the product code. It is then difficult to separate the two.</li>
+    </ul>
+
+    <div class="note">
+      <p><strong>Result:</strong> the assistant cannot verify Hangout Online on desktop with confidence. We spend time on manual checks, and we still have doubt.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>4. The New Approach: Web-Based Version with a Local Server</h2>
+
+    <p>We change the approach. We make Hangout Online work in a <strong>web-based</strong> version first. The web-based version runs in a browser. Then we copy it into <code>faster-desktop</code>.</p>
+
+    <h3>4.1 The parts</h3>
+
+    <div class="diagram">
+      <div class="row">
+        <div class="node">
+          <h4>Web app (browser)</h4>
+          <p>The faster-app user interface, exported for the web. It shows the Hangout Online screen and plays the Episode video.</p>
+        </div>
+        <div class="node server">
+          <h4>Local Go server</h4>
+          <p><code>hangout-online-service</code>. A small HTTP server written in Go. It listens only on this computer.</p>
+        </div>
+        <div class="node tauri">
+          <h4>faster-desktop (Tauri)</h4>
+          <p>A desktop window that loads the same web app. It is a copy of the web-based setup.</p>
+        </div>
+      </div>
+      <div class="arrow">▲</div>
+      <div class="row">
+        <div class="step" style="max-width: none; flex: 1 1 100%;">
+          <strong>One product code, three containers.</strong> The web app is the single source. The browser container is where we test. The Tauri container is what we ship.
+        </div>
+      </div>
+    </div>
+
+    <h3>4.2 What the local Go server does</h3>
+    <p>The web app cannot do all media work alone in the browser. So a local server helps it. The server runs on the same computer as the user.</p>
+
+    <table>
+      <tr>
+        <th>Job</th>
+        <th>What it means</th>
+      </tr>
+      <tr>
+        <td>Listen on localhost</td>
+        <td>The server listens only on <code>127.0.0.1:34721</code>. It is not open to the internet. Only the app on this computer can use it.</td>
+      </tr>
+      <tr>
+        <td>Download trusted media</td>
+        <td>The server downloads the video and the rules track from trusted sources. It stores the files in a local cache.</td>
+      </tr>
+      <tr>
+        <td>Protect the cache</td>
+        <td>The cache files are obfuscated per user. The server decrypts a stream on request.</td>
+      </tr>
+      <tr>
+        <td>Serve the video stream</td>
+        <td>The server sends the video with HTTP Range support. The user can seek forward and back in the Episode.</td>
+      </tr>
+      <tr>
+        <td>Report status</td>
+        <td>The server reports download progress, cache health, and errors. A small local dashboard shows this at <code>http://127.0.0.1:34721/</code>.</td>
+      </tr>
+    </table>
+
+    <h3>4.3 How a Hangout Online session works</h3>
+    <div class="flow">
+      <div class="step"><span class="num">1</span>The user opens the web app in the browser.</div>
+      <div class="step"><span class="num">2</span>The web app asks the local server to prepare the Episode. It sends the media URLs.</div>
+      <div class="step"><span class="num">3</span>The server downloads the media and stores it in the cache.</div>
+      <div class="step"><span class="num">4</span>The web app reads the status until the Episode is ready.</div>
+      <div class="step"><span class="num">5</span>The web app plays the video from the local server. Seek works because of Range support.</div>
+    </div>
+
+    <h3>4.4 Copy into faster-desktop</h3>
+    <p>When the web-based version is correct, we copy it into <code>faster-desktop</code>. The Tauri window loads the same web app. The same local Go server runs next to it. The desktop user gets the same Hangout Online behavior.</p>
+
+    <!-- ============================================================ -->
+    <h2>5. Why This Gives Us Confidence</h2>
+
+    <div class="card cyan">
+      <p><strong>The rule is simple:</strong> if the web-based Hangout Online works, then <code>faster-desktop</code> is correct too. We do not need to test it again in the desktop shell.</p>
+    </div>
+
+    <h3>Why the rule is valid</h3>
+    <ul>
+      <li>The product code is the same. The web app is one code base. Both containers load it.</li>
+      <li>The media path is the same. Both containers use the same local Go server, on the same address.</li>
+      <li>The AI assistant can test the web version well. It can read the page, run requests, and check the server endpoints.</li>
+      <li>The Tauri shell changes only the window, menus, and installers. It does not change the Hangout Online logic.</li>
+    </ul>
+
+    <h3>What the assistant checks in the browser</h3>
+    <div class="grid">
+      <div class="grid-item">
+        <div class="icon">✅</div>
+        <h4>Server health</h4>
+        <p><code>GET /health</code> returns <code>"ok": true</code>.</p>
+      </div>
+      <div class="grid-item">
+        <div class="icon">✅</div>
+        <h4>Prepare</h4>
+        <p><code>POST /episodes/{id}/prepare</code> starts the download.</p>
+      </div>
+      <div class="grid-item">
+        <div class="icon">✅</div>
+        <h4>Status</h4>
+        <p><code>GET /episodes/{id}/status</code> becomes ready.</p>
+      </div>
+      <div class="grid-item">
+        <div class="icon">✅</div>
+        <h4>Playback</h4>
+        <p>The video plays. Seek works. The rules track plays.</p>
+      </div>
+      <div class="grid-item">
+        <div class="icon">✅</div>
+        <h4>Errors</h4>
+        <p>Bad input gives a clear error. The cache repair works.</p>
+      </div>
+      <div class="grid-item">
+        <div class="icon">✅</div>
+        <h4>Interface</h4>
+        <p>The Hangout Online screens show correct data and controls.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>6. The Way of Working from Now On</h2>
+
+    <ol>
+      <li><strong>Develop Hangout Online in the web-based version.</strong> Use the browser and the local Go server.</li>
+      <li><strong>Test with the AI assistant.</strong> The assistant checks the pages and the server endpoints.</li>
+      <li><strong>Fix all problems in the web-based version.</strong> Keep the code one source.</li>
+      <li><strong>Copy into faster-desktop.</strong> Apply only the desktop-specific parts (window, menus, installers).</li>
+      <li><strong>Ship with confidence.</strong> No second test round for the desktop shell.</li>
+    </ol>
+
+    <div class="note">
+      <p><strong>Only one case needs a manual desktop check:</strong> when we change the Tauri shell itself. For example, a change to the window, the menus, or the installer. For all Hangout Online work, the browser test is the source of truth.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>7. Summary</h2>
+
+    <div class="grid">
+      <div class="grid-item">
+        <h4>Before</h4>
+        <p>Phone app → desktop copy (Tauri). Straightforward to build, but hard to test with an AI assistant.</p>
+      </div>
+      <div class="grid-item">
+        <h4>Now</h4>
+        <p>Web-based app + local Go server. Easy to test. Then copy into faster-desktop.</p>
+      </div>
+      <div class="grid-item">
+        <h4>Payoff</h4>
+        <p>One test, one source of truth. A green web test means a correct desktop app.</p>
+      </div>
+    </div>
+
+    <p style="margin-top: 32px;">
+      <span class="pill">faster-app (Android, iOS)</span>
+      <span class="pill">faster-desktop (Tauri 2)</span>
+      <span class="pill">hangout-online-service (Go, 127.0.0.1:34721)</span>
+      <span class="pill">web-based test = source of truth</span>
+    </p>
+
+  </div>
+</body>
+</html>
