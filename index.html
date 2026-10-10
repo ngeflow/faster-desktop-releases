@@ -188,6 +188,8 @@
       <a id="mac-alt" href="downloads/0.16.6/Ngeshare-Desktop-0.16.6-aarch64.dmg">macOS (Apple Silicon .dmg)</a>
       <span class="sep">·</span>
       <a id="win-alt" href="downloads/0.16.6/Ngeshare-Desktop-0.16.6-x64-setup.exe">Windows (.exe)</a>
+      <span class="sep">·</span>
+      <a id="linux-alt" href="downloads/0.16.6/Ngeshare-Desktop-0.16.6-amd64.deb">Linux (.deb)</a>
     </div>
 
     <details>
@@ -245,12 +247,17 @@
   var label = document.getElementById('primary-label');
   var macUrl = document.getElementById('mac-alt').href;
   var winUrl = document.getElementById('win-alt').href;
+  var linuxUrl = document.getElementById('linux-alt').href;
+  var isLinux = /Linux/.test(ua);
   if (isMac) {
     btn.href = macUrl;
     label.textContent = 'Download for macOS';
   } else if (isWin) {
     btn.href = winUrl;
     label.textContent = 'Download for Windows';
+  } else if (isLinux) {
+    btn.href = linuxUrl;
+    label.textContent = 'Download for Linux';
   } else {
     label.textContent = 'Choose your platform below';
   }
