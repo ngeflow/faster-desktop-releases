@@ -70,30 +70,48 @@ a:hover {
 }
 
 .wave-bg__layer--a {
-  --wave-speed: 19s;
-  opacity: 0.9;
+  --wave-speed: 17s;
+  opacity: 0.62;
+  animation-name: wave-drift-a;
 }
 
 .wave-bg__layer--b {
-  --wave-speed: 13s;
-  opacity: 0.65;
-  animation-direction: alternate-reverse;
+  --wave-speed: 23s;
+  opacity: 0.42;
+  animation-name: wave-drift-b;
 }
 
 .wave-bg__layer--c {
-  --wave-speed: 23s;
-  opacity: 0.5;
+  --wave-speed: 29s;
+  opacity: 0.3;
+  animation-name: wave-drift-c;
 }
 
-@keyframes wave-drift {
+/* Slow lateral flow: the ribbons travel, they do not just scale. */
+@keyframes wave-drift-a {
   0% {
-    transform: translate3d(-2%, -1%, 0) scale(1.04);
-  }
-  50% {
-    transform: translate3d(1.5%, 1%, 0) scale(1.07);
+    transform: translate3d(-3%, 1%, 0) scale(1.06);
   }
   100% {
-    transform: translate3d(-1%, -1.5%, 0) scale(1.05);
+    transform: translate3d(3%, -1%, 0) scale(1.08);
+  }
+}
+
+@keyframes wave-drift-b {
+  0% {
+    transform: translate3d(3%, -0.5%, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-3%, 1%, 0) scale(1.05);
+  }
+}
+
+@keyframes wave-drift-c {
+  0% {
+    transform: translate3d(-2%, 0, 0) scale(1.1);
+  }
+  100% {
+    transform: translate3d(2.5%, -1%, 0) scale(1.07);
   }
 }
 
